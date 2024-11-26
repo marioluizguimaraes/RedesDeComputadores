@@ -28,7 +28,7 @@ public class EnderecoIP {
     private String inverterBits(String mascarabinario) {
         StringBuilder invertido = new StringBuilder();
         for (char bit : mascarabinario.toCharArray()) {
-            invertido.append(bit == '0' ? '1' : '0'); // Inverte 0 para 1 e 1 para 0
+            invertido.append(bit == '0' ? '1' : '0');
         }
         return invertido.toString();
     }

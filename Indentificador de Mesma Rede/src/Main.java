@@ -9,7 +9,7 @@ public class Main {
 
         System.out.println("-------------------------------------------------------------");
 
-        System.out.println("ATENÇÃO: O IP e a Mascara deve ser digitado no formato 255.255.255.255 !");
+        System.out.println("ATENÇÃO: O IP e a Mascara deve ser digitado no formato 255.255.255.255");
 
         System.out.println("-------------------------------------------------------------");
 

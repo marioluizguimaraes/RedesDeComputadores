@@ -1,31 +1,32 @@
 import java.util.Arrays;
 
 public class EnderecoIP {
+
     private String enderecoIp;
     private String mascaraDeRede;
-
     private String[] binarioCodeIp;
     private String[] binarioCodeMascara;
 
     public EnderecoIP (String ip, String mascara){
-        enderecoIp = ip;
-        mascaraDeRede = mascara;
-        binarioCodeIp = new String[4];
-        binarioCodeMascara = new String[4];
-
-        String[] StringDeOctetosDeIp = this.enderecoIp.split("\\.");
-        String[] StringDeOctetosDeMascara = this.mascaraDeRede.split("\\.");
-
-        int[] octetosDeIp = Arrays.stream(StringDeOctetosDeIp).mapToInt(Integer::parseInt).toArray();
-        int[] octetosDeMascara = Arrays.stream(StringDeOctetosDeMascara).mapToInt(Integer::parseInt).toArray();
-
-        //----------------------------------------------------------------------------------------------------------------
+        this.enderecoIp = ip;
+        this.mascaraDeRede = mascara;
+        this.binarioCodeIp = new String[4];
+        this.binarioCodeMascara = new String[4];
 
         for (int i = 0; i < 4; i++) {
-            binarioCodeIp[i] = String.format("%08d", Integer.parseInt(Integer.toBinaryString(octetosDeIp[i])));
-            binarioCodeMascara[i] = String.format("%08d", Integer.parseInt(Integer.toBinaryString(octetosDeMascara[i])));
+            this.binarioCodeIp[i] = String.format("%08d", Integer.parseInt(Integer.toBinaryString(this.OctetosEmInt(this.enderecoIp)[i])));
+            this.binarioCodeMascara[i] = String.format("%08d", Integer.parseInt(Integer.toBinaryString(this.OctetosEmInt(this.mascaraDeRede)[i])));
         }
     }
+
+    private String[] OctetosEmstring(String endereco){
+        return endereco.split("\\.");
+    }
+
+    private int[] OctetosEmInt (String endereco){
+        return Arrays.stream(this.OctetosEmstring(endereco)).mapToInt(Integer::parseInt).toArray();
+    }
+
 
     private String inverterBits(String mascarabinario) {
         StringBuilder invertido = new StringBuilder();

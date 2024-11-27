@@ -78,8 +78,8 @@ public class Main {
                 if (valores[i] < 0 || valores[i] > 255) return false;
             }
 
-            for (int i = 0; i < valores.length; i++) {
-                if (valores[i] < 255 && valores[i-1] < 255) return false;
+            for (int i = 1; i < valores.length; i++) {
+                if (valores[i-1] < 255 && valores[i] != 0) return false;
             }
         } catch (NumberFormatException e) { return false; }
         return true;

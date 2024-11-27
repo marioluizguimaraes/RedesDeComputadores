@@ -4,12 +4,14 @@ public class EnderecoIP {
     private String enderecoIp;
     private String mascaraDeRede;
 
-    private String[] binarioCodeIp = new String[4];
-    private String[] binarioCodeMascara = new String[4];
+    private String[] binarioCodeIp;
+    private String[] binarioCodeMascara;
 
     public EnderecoIP (String ip, String mascara){
         enderecoIp = ip;
         mascaraDeRede = mascara;
+        binarioCodeIp = new String[4];
+        binarioCodeMascara = new String[4];
 
         String[] StringDeOctetosDeIp = this.enderecoIp.split("\\.");
         String[] StringDeOctetosDeMascara = this.mascaraDeRede.split("\\.");
@@ -42,15 +44,12 @@ public class EnderecoIP {
         char[] ipBit = getIp().toCharArray();
 
         for (int i = 0; i < mascaraBit.length; i++ ) {
-            if ( mascaraBit[i] == '0'){
-                 ipDeBroadcast.append(ipBit[i]);
-            }
-            else if (mascaraBit[i] == '.') {
-                ipDeBroadcast.append('.');
-            }
-            else {
-                ipDeBroadcast.append(mascaraBit[i]);
-            }
+            var a = switch(mascaraBit[i]) {
+                case '0' -> ipBit[i];
+                case '.' -> '.';
+                default ->  mascaraBit[i];
+            };
+            ipDeBroadcast.append(a);
         }
         return ipDeBroadcast.toString();
     }

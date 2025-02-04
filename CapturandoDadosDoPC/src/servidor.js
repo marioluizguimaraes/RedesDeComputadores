@@ -19,6 +19,7 @@ udpServer.on('listening', () => {
 
 // Envia o broadcast UDP a cada 5 segundos
 setInterval(() => {
+    console.log('Enviando')
     // Monta um JSON com o IP e a porta do servidor TCP
     const message = JSON.stringify({ 
         serverIp: getIp(), 

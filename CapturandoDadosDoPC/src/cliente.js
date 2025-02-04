@@ -26,7 +26,7 @@ const getSystemInfo = async () => {
     return {
         usuario: userInfo.username,
         ip,
-        processadores: os.cpus().length,
+        processadores: si.cpu().cores,
         tempCPU: tempCPU.main ? `${tempCPU.main} °C` : 'Não disponível',
         memoriaTotal: (mem / (1024 ** 3)).toFixed(2) + ' GB', // Converte bytes para GB
         memoriaLivre: (freeMem / (1024 ** 3)).toFixed(2) + ' GB' // Converte bytes para GB

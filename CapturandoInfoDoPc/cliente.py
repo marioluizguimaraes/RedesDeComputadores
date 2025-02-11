@@ -44,8 +44,8 @@ class Cliente:
             mensagem, _ = udp_socket.recvfrom(1024)
             mensagem = mensagem.decode()
             if mensagem.startswith("SERVIDOR_TCP:"):
-                _, porta = mensagem.split(":")
-                self.servidor_endereco = ('', int(porta))
+                _, ip_servidor, porta = mensagem.split(":")  # Extrai IP e porta
+                self.servidor_endereco = (ip_servidor, int(porta))  # Define o endereço completo
                 print(f"Servidor encontrado: {self.servidor_endereco}")
                 break
 

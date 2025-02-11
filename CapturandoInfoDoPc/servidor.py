@@ -58,13 +58,16 @@ class Servidor:
     def broadcast_udp(self):
         udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        mensagem = f"SERVIDOR_TCP:{self.tcp_port}"
+        ip_servidor = socket.gethostbyname(socket.gethostname())  # Obtém o IP do servidor
+        mensagem = f"SERVIDOR_TCP:{ip_servidor}:{self.tcp_port}"  # Inclui o IP na mensagem
         while self.running:
             udp_socket.sendto(mensagem.encode(), ('<broadcast>', self.broadcast_port))
             time.sleep(30)
 
     def lidar_cliente(self, cliente):
         try:
+            # Envia a chave de criptografia para o cliente
+            cliente.conn.send(self.key)
             while self.running:
                 dados_criptografados = cliente.conn.recv(1024)
                 if not dados_criptografados:

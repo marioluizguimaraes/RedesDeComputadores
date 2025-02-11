@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "dgram": "^1.0.1",
+    "net": "^1.0.2",
     "systeminformation": "^5.25.11"
   }
 }

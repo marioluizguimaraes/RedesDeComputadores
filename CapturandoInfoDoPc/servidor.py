@@ -80,7 +80,7 @@ class Servidor:
                 dados = self.descriptografar(dados_criptografados)  # Descriptografa os dados recebidos
                 if not cliente.nome_usuario:  # Define o nome do usuário se ainda não foi definido
                     cliente.nome_usuario = dados.get("nome_usuario", "Desconhecido")  # Obtém o nome do usuário dos dados
-                    print(f"Novo cliente conectado: {cliente.nome_usuario} ({cliente.ip})")  # Informa que um novo cliente foi conectado
+                    print(f"\nNovo cliente conectado: {cliente.nome_usuario} ({cliente.ip})")  # Informa que um novo cliente foi conectado
                 cliente.dados = dados  # Atualiza os dados do cliente
                 print(f"Dados recebidos")
                 #print(f"Dados recebidos de {cliente.nome_usuario}: {dados}")  # Exibe os dados recebidos
@@ -98,7 +98,7 @@ class Servidor:
     # Método para ler comandos digitados no terminal
     def ler_comandos(self):
         while self.running:  # Loop infinito para ler comandos
-            comando = inputln("Digite um comando (help para lista): ").strip().lower()  # Lê o comando do terminal
+            comando = input("Digite um comando (help para lista):").strip().lower()  # Lê o comando do terminal
             if comando == "help":  # Exibe a lista de comandos disponíveis
                 print("Comandos disponíveis:")
                 print("- listar: Mostra todos os clientes conectados.")
@@ -113,7 +113,9 @@ class Servidor:
                 _, identificador = comando.split(maxsplit=1)  # Divide o comando em duas partes (comando e identificador)
                 cliente = self.encontrar_cliente(identificador)  # Procura o cliente pelo nome ou IP
                 if cliente:
-                    print(f"Informações de {cliente.nome_usuario}: {cliente.dados}")  # Exibe as informações do cliente
+                    print(f"Informações de {cliente.nome_usuario}:")
+                    for chave, valor in cliente.dados.items():
+                        print(f"  - {chave}: {valor}")  # Exibe as informações do cliente
                 else:
                     print("Cliente não encontrado.")  # Informa que o cliente não foi encontrado
             elif comando == "media":  # Calcula a média das informações numéricas de todos os clientes
@@ -123,14 +125,14 @@ class Servidor:
                 cliente = self.encontrar_cliente(identificador)  # Procura o cliente pelo nome ou IP
                 if cliente:
                     self.remover_cliente(cliente)  # Remove o cliente da lista
-                    println(f"Cliente {cliente.nome_usuario} desconectado.")  # Informa que o cliente foi desconectado
+                    print(f"Cliente {cliente.nome_usuario} desconectado.")  # Informa que o cliente foi desconectado
                 else:
                     print("Cliente não encontrado.")  # Informa que o cliente não foi encontrado
             elif comando == "sair":  # Encerra o servidor
                 self.running = False  # Altera o estado do servidor para "não rodando"
                 for cliente in self.clientes:  # Fecha a conexão com todos os clientes conectados
                     cliente.fechar_conexao()
-                println("Encerrando servidor...")  # Informa que o servidor está sendo encerrado
+                print("Encerrando servidor...")  # Informa que o servidor está sendo encerrado
                 break  # Sai do loop
 
     # Método para encontrar um cliente pelo nome ou IP
@@ -143,7 +145,7 @@ class Servidor:
     # Método para calcular a média das informações numéricas de todos os clientes
     def calcular_media(self):
         if not self.clientes:  # Verifica se há clientes conectados
-            println("Nenhum cliente conectado.")  # Informa que não há clientes conectados
+            print("Nenhum cliente conectado.")  # Informa que não há clientes conectados
             return
         total_cores = total_ram_total = total_ram_livre = total_disco_total = total_disco_livre = total_temp = 0  # Inicializa variáveis para calcular totais
         count = len(self.clientes)  # Número de clientes conectados

@@ -54,9 +54,7 @@ def getEspacoDisco():
 
 
 def enviarInfo(servidor_ip, porta):
-    """
-    Envia as informações do sistema para o servidor via socket TCP.
-    """
+
     try:
         # Coleta as informações do sistema
         ip_publico = getIpPublico()
@@ -77,10 +75,11 @@ def enviarInfo(servidor_ip, porta):
             f"Espaço em Disco Livre: {disco_livre} GB\n"
         )
 
-        # Cria o socket TCP
+        # Configuração do contexto SSL
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         context.load_verify_locations("cert.pem")  # Certificado do servidor
-
+        
+        # Cria o socket TCP
         with socket.create_connection((servidor_ip, porta)) as sock:
             with context.wrap_socket(sock, server_hostname=servidor_ip) as cliente:
                 cliente.sendall(dados.encode('utf-8'))  # Envia os dados

@@ -1,6 +1,7 @@
 import psutil 
 import requests
 import socket
+import ssl
 
 def getIpPublico():
     try:
@@ -77,10 +78,13 @@ def enviarInfo(servidor_ip, porta):
         )
 
         # Cria o socket TCP
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as cliente:
-            cliente.connect((servidor_ip, porta))  # Conecta ao servidor
-            cliente.sendall(dados.encode('utf-8'))  # Envia os dados
-            print("Informações enviadas com sucesso!")
+        context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        context.load_verify_locations("cert.pem")  # Certificado do servidor
+
+        with socket.create_connection((servidor_ip, porta)) as sock:
+            with context.wrap_socket(sock, server_hostname=servidor_ip) as cliente:
+                cliente.sendall(dados.encode('utf-8'))  # Envia os dados
+                print("Informações enviadas com sucesso!")
 
     except Exception as e:
         print(f"Erro ao enviar informações via socket: {e}")

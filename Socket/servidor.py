@@ -20,7 +20,7 @@ def iniciarServidor(ip, porta):
         print(f"Erro ao iniciar o servidor: {e}")
 
 # Configuração do servidor
-SERVIDOR_IP = "0.0.0.0"  # Escuta em todas as interfaces de rede
+SERVIDOR_IP = "10.0.0.102"  # Escuta em todas as interfaces de rede
 PORTA = 5000            # Porta usada para comunicação
 
 if __name__ == "__main__":

@@ -86,7 +86,7 @@ def enviarInfo(servidor_ip, porta):
         print(f"Erro ao enviar informações via socket: {e}")
 
 # Configuração do servidor
-SERVIDOR_IP = "127.0.0.1"  # Substitua pelo IP do servidor
+SERVIDOR_IP = "10.0.0.102"  # Substitua pelo IP do servidor
 PORTA = 5000              # Porta usada para comunicação
 
 # Chamada das funções e exibição dos resultados

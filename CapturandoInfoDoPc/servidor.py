@@ -82,7 +82,8 @@ class Servidor:
                     cliente.nome_usuario = dados.get("nome_usuario", "Desconhecido")  # Obtém o nome do usuário dos dados
                     print(f"Novo cliente conectado: {cliente.nome_usuario} ({cliente.ip})")  # Informa que um novo cliente foi conectado
                 cliente.dados = dados  # Atualiza os dados do cliente
-                print(f"Dados recebidos de {cliente.nome_usuario}: {dados}")  # Exibe os dados recebidos
+                print(f"Dados recebidos")
+                #print(f"Dados recebidos de {cliente.nome_usuario}: {dados}")  # Exibe os dados recebidos
         except Exception as e:
             print(f"Erro ao lidar com cliente {cliente.nome_usuario}: {e}")  # Imprime mensagem de erro
         finally:
@@ -97,13 +98,13 @@ class Servidor:
     # Método para ler comandos digitados no terminal
     def ler_comandos(self):
         while self.running:  # Loop infinito para ler comandos
-            comando = input("Digite um comando (help para lista): ").strip().lower()  # Lê o comando do terminal
+            comando = inputln("Digite um comando (help para lista): ").strip().lower()  # Lê o comando do terminal
             if comando == "help":  # Exibe a lista de comandos disponíveis
                 print("Comandos disponíveis:")
                 print("- listar: Mostra todos os clientes conectados.")
-                print("- info <nome/ip>: Mostra informações de um cliente específico.")
+                print("- info [ip]: Mostra informações de um cliente específico.")
                 print("- media: Mostra a média das informações numéricas de todos os clientes.")
-                print("- desconectar <nome/ip>: Desconecta um cliente específico.")
+                print("- desconectar [ip]: Desconecta um cliente específico.")
                 print("- sair: Encerra o servidor.")
             elif comando == "listar":  # Lista todos os clientes conectados
                 for cliente in self.clientes:
@@ -122,14 +123,14 @@ class Servidor:
                 cliente = self.encontrar_cliente(identificador)  # Procura o cliente pelo nome ou IP
                 if cliente:
                     self.remover_cliente(cliente)  # Remove o cliente da lista
-                    print(f"Cliente {cliente.nome_usuario} desconectado.")  # Informa que o cliente foi desconectado
+                    println(f"Cliente {cliente.nome_usuario} desconectado.")  # Informa que o cliente foi desconectado
                 else:
                     print("Cliente não encontrado.")  # Informa que o cliente não foi encontrado
             elif comando == "sair":  # Encerra o servidor
                 self.running = False  # Altera o estado do servidor para "não rodando"
                 for cliente in self.clientes:  # Fecha a conexão com todos os clientes conectados
                     cliente.fechar_conexao()
-                print("Encerrando servidor...")  # Informa que o servidor está sendo encerrado
+                println("Encerrando servidor...")  # Informa que o servidor está sendo encerrado
                 break  # Sai do loop
 
     # Método para encontrar um cliente pelo nome ou IP
@@ -142,7 +143,7 @@ class Servidor:
     # Método para calcular a média das informações numéricas de todos os clientes
     def calcular_media(self):
         if not self.clientes:  # Verifica se há clientes conectados
-            print("Nenhum cliente conectado.")  # Informa que não há clientes conectados
+            println("Nenhum cliente conectado.")  # Informa que não há clientes conectados
             return
         total_cores = total_ram_total = total_ram_livre = total_disco_total = total_disco_livre = total_temp = 0  # Inicializa variáveis para calcular totais
         count = len(self.clientes)  # Número de clientes conectados

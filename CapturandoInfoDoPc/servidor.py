@@ -1,4 +1,3 @@
-# Importações de bibliotecas necessárias
 import socket  # Para comunicação de rede (UDP e TCP)
 import threading  # Para executar tarefas em paralelo (threads)
 import time  # Para pausar a execução do programa
@@ -43,13 +42,16 @@ class Servidor:
     def iniciar(self):
         # Inicia uma thread para enviar mensagens de broadcast UDP
         threading.Thread(target=self.broadcast_udp).start()
+        
         # Cria um socket TCP para aceitar conexões
         self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Cria um socket TCP
         self.socket_tcp.bind(('', self.tcp_port))  # Vincula o socket à porta TCP especificada
         self.socket_tcp.listen(5)  # Coloca o socket em modo de escuta (máximo de 5 conexões pendentes)
         print(f"Servidor TCP ouvindo na porta {self.tcp_port}...")  # Informa que o servidor está ouvindo
+       
         # Inicia uma thread para ler comandos do terminal
         threading.Thread(target=self.ler_comandos).start()
+        
         # Loop principal para aceitar novas conexões TCP
         while self.running:
             conn, addr = self.socket_tcp.accept()  # Aceita uma nova conexão TCP
